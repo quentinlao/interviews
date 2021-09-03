@@ -16,3 +16,33 @@
 # Readme
 
 ## Initialization
+
+-   yarn
+-   yarn start
+
+## Integration test
+
+# Launch
+
+-   yarn cypress:open (launch app and cypress)
+-   yarn cypress:run (launch test cli)
+
+# Coverage
+
+-   coverage/lcov-report/index.html
+
+## Information
+
+# Globaly
+
+-   Create react app
+-   i don't want to configure myself webapck : Script babel -> node_modules/react-scripts/scripts
+-   SKIP_PREFLIGHT_CHECK=true env because i don't configure with CRA (ID cypress/code)
+
+# For me
+
+-   env.dev
+-   gitignore add more rules
+-   prettierignore / prettierrc rules config
+-   settings.json personnal vscode rules todo because prettier.configPath
+-   cypress.json to redefine path

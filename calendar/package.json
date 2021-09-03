@@ -1,0 +1,71 @@
+{
+    "name": "react-redux-hooks-jwt-auth",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@cypress/code-coverage": "^3.9.10",
+        "@cypress/instrument-cra": "^1.4.0",
+        "@fullcalendar/daygrid": "^5.9.0",
+        "@fullcalendar/interaction": "^5.9.0",
+        "@fullcalendar/react": "^5.9.0",
+        "@fullcalendar/timegrid": "^5.9.0",
+        "@types/node": "^14.14.28",
+        "@types/prettier": "^2.0.0",
+        "@types/react": "^17.0.2",
+        "@types/react-dom": "^17.0.1",
+        "@types/validator": "^13.1.3",
+        "axios": "^0.21.1",
+        "base-64": "^1.0.0",
+        "bootstrap": "^4.5.2",
+        "i18next": "^20.6.0",
+        "istanbul-lib-coverage": "^3.0.0",
+        "nyc": "^15.1.0",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-i18next": "^11.11.4",
+        "react-redux": "^7.2.1",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "^4.0.2",
+        "redux": "^4.0.5",
+        "redux-thunk": "^2.3.0",
+        "typescript": "^4.1.5",
+        "validator": "^13.5.2",
+        "start-server-and-test": "^1.11.3"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "cypress:start:app": "react-scripts -r @cypress/instrument-cra start",
+        "cypress:start:wait": "start-server-and-test cypress:start:app http://localhost:3000",
+        "cypress:open": "yarn cypress:start:wait \"cypress open\"",
+        "cypress:run": "yarn cypress:start:wait  \"cypress run\"",
+        "eject": "react-scripts eject",
+        "cypress": "cypress open",
+        "dev": "start-test 3000 cypress"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/base-64": "^0.1.3",
+        "@types/react-redux": "^7.1.16",
+        "@types/react-router-dom": "^5.1.7",
+        "cypress": "^8.3.1",
+        "prettier": "2.3.2",
+        "react-validation": "^3.0.7",
+        "redux-devtools-extension": "^2.13.8"
+    },
+    "proxy": "http://localhost:9292"
+}
