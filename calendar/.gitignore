@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/api/node_modules
+
 /.pnp
 .pnp.js
 
@@ -30,3 +32,8 @@ cypress/video
 cypress/screenshots
 
 .nyc_output
+
+# env
+.env
+/api/.env
+apiZoom

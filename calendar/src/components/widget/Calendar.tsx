@@ -3,10 +3,17 @@ import FullCalendar from '@fullcalendar/react'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { getListMeeting } from '../../actions/zoom';
+import { useDispatch } from 'react-redux';
 
 export const CALENDAR_ID = 'calendarId';
 
-const Calendar = () => {
+const Calendar = (): JSX.Element => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const data = dispatch(getListMeeting());
+    }, []);
     return (
         <div id={CALENDAR_ID}>
             <FullCalendar
