@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
+import { IHTTPCode } from '../utils/IHttpInterface';
 import authHeader from './auth-header';
 
-const API_URL = 'https://api.zoom.us/v2';
+const API_URL = 'http://localhost:9292';
 
-interface IMeeting {
+export interface IMeeting {
     uuid: string;
     id: number;
     host_id: string;
@@ -16,19 +17,18 @@ interface IMeeting {
     join_url: string;
 }
 
-interface IResponseAuth {
-    page_size: number;
-    total_records: number;
-    next_page_token: string;
-    meetings: IMeeting[];
+export interface IResponseAxios {
+    config: any;
+    data: IMeeting[];
+    headers: any;
+    request: any;
+    status: IHTTPCode;
 }
 
 const getListMeeting = () => {
     return axios
-        .get(API_URL + '/users/me/meetings', {
-            headers: authHeader(),
-        })
-        .then((response: AxiosResponse<IResponseAuth>) => {
+        .get(API_URL + '/meetings')
+        .then((response: AxiosResponse<IResponseAxios>) => {
             console.log(
                 '🚀 ~ file: auth.service.tsx ~ line 32 ~ login ~ response',
                 response

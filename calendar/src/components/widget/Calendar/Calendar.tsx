@@ -3,31 +3,59 @@ import FullCalendar from '@fullcalendar/react'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { getListMeeting } from '../../actions/zoom';
-import { useDispatch } from 'react-redux';
+import { getListMeeting } from '../../../actions/zoom';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../../reducers';
+import { IMeeting } from '../../../services/zoom.service';
+import moment from 'moment';
 
 export const CALENDAR_ID = 'calendarId';
 
+function mapToFullCalendarEvent(
+    meetingEventState: IMeeting[] | undefined
+) {
+    return meetingEventState?.map((meeting: IMeeting) => {
+        return {
+            id: meeting.id.toString(),
+            start: meeting.start_time,
+            end: moment(meeting.start_time)
+                .add(meeting.duration, 'm')
+                .toDate()
+                .toString(),
+
+            title: meeting.topic,
+        };
+    });
+}
+
 const Calendar = (): JSX.Element => {
     const dispatch = useDispatch();
-
+    const zoom = useSelector((state: IRootState) => state.zoom);
+    const [meetingEventState, setMeetingEventState] =
+        useState<IMeeting[]>();
+    /**
+     * Initialization component
+     * update calendar events
+     */
     useEffect(() => {
-        const data = dispatch(getListMeeting());
+        dispatch(getListMeeting());
     }, []);
+
+    /**
+     * Subscribe to each change storage zoom
+     * MeetingEvents setted
+     */
+    useEffect(() => {
+        setMeetingEventState(zoom.meetings);
+    }, [zoom]);
+
     return (
         <div id={CALENDAR_ID}>
             <FullCalendar
                 plugins={[timeGridPlugin, interactionPlugin]}
                 initialView="timeGridWeek"
                 editable={true}
-                events={[
-                    {
-                        id: 'a',
-                        start: '2021-09-01T10:30:00',
-                        end: '2021-09-01T11:30:00',
-                        title: 'my event',
-                    },
-                ]}
+                events={mapToFullCalendarEvent(meetingEventState)}
                 droppable={true}
                 drop={(event) => {
                     console.log(

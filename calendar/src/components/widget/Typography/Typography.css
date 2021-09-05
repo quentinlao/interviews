@@ -1,0 +1,9 @@
+.typographyContainer {
+    background: red;
+}
+
+.typographyStyle {
+    font-family: filson-pro, sans-serif;
+    font-style: normal;
+    font-size: 19px;
+}

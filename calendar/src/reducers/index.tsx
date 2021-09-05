@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux';
+import { IMeeting } from '../services/zoom.service';
 import zoom from './zoom';
 
-/* export interface IRootState {
-    auth: IAuth;
+interface IZoom {
+    meetings: IMeeting[];
 }
-export interface IAuth {
-    isLoggedIn: boolean;
-    username: string;
-    email: string;
-    roles: [];
-} */
+export interface IRootState {
+    zoom: IZoom;
+}
 export default combineReducers({
     zoom,
 });

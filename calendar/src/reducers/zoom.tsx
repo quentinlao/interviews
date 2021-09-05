@@ -7,6 +7,7 @@ export default function (
     action: { type: Meeting; payload: any }
 ) {
     const { type, payload } = action;
+    console.log('🚀 ~ file: zoom.tsx ~ line 10 ~ action', action);
 
     switch (type) {
         case Meeting.MEETING_READ_SUCCESS:
@@ -17,8 +18,9 @@ export default function (
             );
             return {
                 ...state,
+                meetings: payload,
             };
         default:
-            return state;
+            return { ...state, meetings: [] };
     }
 }

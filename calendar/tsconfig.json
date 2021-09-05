@@ -15,7 +15,8 @@
         "jsx": "react",
         "noFallthroughCasesInSwitch": true,
         "isolatedModules": true,
-        "types": ["cypress"]
+        "types": ["cypress"],
+        "plugins": [{ "name": "typescript-plugin-css-modules" }]
     },
     "include": ["src"]
 }

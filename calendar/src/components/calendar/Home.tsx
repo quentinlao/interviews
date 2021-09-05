@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Calendar from '../widget/Calendar';
-import Welcome from '../widget/Welcome';
+import Calendar from '../widget/Calendar/Calendar';
+import Typography from '../widget/Typography/Typography';
+import Welcome from '../widget/Welcome/Welcome';
 
 const Home = () => {
     const { t } = useTranslation();
