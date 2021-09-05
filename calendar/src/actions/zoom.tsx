@@ -34,3 +34,38 @@ export const getListMeeting = () => (dispatch: any) => {
         }
     );
 };
+
+export const createMeeting =
+    (client: string, startDate: string, duration: string) =>
+    (dispatch: any) => {
+        return ZoomService.createMeeting(
+            client,
+            startDate,
+            duration
+        ).then(
+            (data: void | AxiosResponse<IResponseAxios>) => {
+                console.log(
+                    '🚀 ~ file: auth.tsx ~ line 8 ~ getListMeeting ~ data',
+                    data
+                );
+                if (data) {
+                    /* if (
+                        (data as AxiosResponse<IResponseAxios>)
+                            .status == IHTTPCode.SUCCESS
+                    ) { */
+                    dispatch({
+                        type: Meeting.MEETING_CREATED_SUCCESS,
+                        payload: data.data,
+                    });
+                    /*  } */
+                }
+                return Promise.resolve();
+            },
+            (error) => {
+                dispatch({
+                    type: Meeting.MEETING_FAIL,
+                });
+                return Promise.reject();
+            }
+        );
+    };

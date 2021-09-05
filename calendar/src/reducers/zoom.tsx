@@ -20,6 +20,11 @@ export default function (
                 ...state,
                 meetings: payload,
             };
+        case Meeting.MEETING_CREATED_SUCCESS:
+            return {
+                ...state,
+                meetings: payload,
+            };
         default:
             return { ...state, meetings: [] };
     }

@@ -44,6 +44,34 @@ const getListMeeting = () => {
         });
 };
 
+const createMeeting = (
+    client: string,
+    startDate: string,
+    duration: string
+) => {
+    return axios
+        .post(API_URL + '/meetings', {
+            client,
+            startDate,
+            duration,
+        })
+        .then((response: AxiosResponse<IResponseAxios>) => {
+            console.log(
+                '🚀 ~ file: auth.service.tsx ~ line 32 ~ login ~ response',
+                response
+            );
+
+            return Promise.resolve(response);
+        })
+        .catch((error) => {
+            console.log(
+                '🚀 ~ file: zoom.service.tsx ~ line 39 ~ .then ~ error',
+                error
+            );
+        });
+};
+
 export default {
     getListMeeting,
+    createMeeting,
 };
