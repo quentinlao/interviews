@@ -1,6 +1,7 @@
 import { Meeting } from '../actions/types';
+import { IMeeting } from '../services/zoom.service';
 
-const initialState = {};
+const initialState = { meetings: [] as IMeeting[] };
 
 export default function (
     state = initialState,
@@ -21,9 +22,14 @@ export default function (
                 meetings: payload,
             };
         case Meeting.MEETING_CREATED_SUCCESS:
+            console.log(
+                '🚀 ~ file: zoom.tsx ~ line 33 ~ Meeting.MEETING_CREATED_SUCCESS',
+                state,
+                action
+            );
             return {
                 ...state,
-                meetings: payload,
+                meetings: [...state.meetings, ...payload],
             };
         default:
             return { ...state, meetings: [] };
