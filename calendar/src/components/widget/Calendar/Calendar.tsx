@@ -85,6 +85,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
                 <Form.Group className="mb-3" controlId="form">
                     <Form.Label>{t('clientNameLabel')}</Form.Label>
                     <Form.Control
+                        id={'clientName'}
                         type="text"
                         placeholder={t('clientName')}
                         value={stateForm.name}
@@ -105,6 +106,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
                 <Form.Label>{t('clientDateLabel')}</Form.Label>
 
                 <Form.Control
+                    id={'startDate'}
                     type="datetime-local"
                     name="startDate"
                     value={stateForm.startDate}
@@ -120,6 +122,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
 
                 <Form.Label>{t('clientDurationLabel')}</Form.Label>
                 <Form.Control
+                    id={'duration'}
                     type="number"
                     placeholder={t('duration')}
                     value={stateForm.duration}

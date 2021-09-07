@@ -30,17 +30,25 @@ const ModalView = (props: IModal): JSX.Element => {
     const handleClose = () => props.setDisplayModal(false);
 
     return (
-        <Modal show={props.show} onHide={handleClose}>
+        <Modal id={'MODAL_ID'} show={props.show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>{props.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>{props.children}</Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button
+                    id={'CLOSE'}
+                    variant="secondary"
+                    onClick={handleClose}
+                >
                     Close
                 </Button>
-                <Button variant="primary" onClick={props.handleSave}>
-                    Save Changes
+                <Button
+                    id={'SAVE'}
+                    variant="primary"
+                    onClick={props.handleSave}
+                >
+                    Save
                 </Button>
             </Modal.Footer>
         </Modal>
