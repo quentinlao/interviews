@@ -17,6 +17,13 @@
 
 ## Initialization
 
+### Config
+
+Add to env `REACT_APP_JWT_INTERVIEW` the token created for zoom jwt connection it will be expired at `00:00 09/24/2021`
+
+-   `.env`
+-   `/api/.env`
+
 ### client port 3000
 
 To start the client, ddl dep `yarn` and to start `yarn start`
