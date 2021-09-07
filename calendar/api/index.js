@@ -38,6 +38,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+/**
+ * create query param
+ */
 function encodeQueryData(data) {
     const ret = [];
     for (let d in data)
@@ -81,68 +84,7 @@ function getListMeeting() {
         });
 }
 
-function getListMeeting2() {
-    return axios
-        .get(
-            API_URL + '/users/me/meetings',
-            {
-                headers: {
-                    Authorization:
-                        'Bearer ' +
-                        process.env.REACT_APP_JWT_INTERVIEW,
-                },
-            },
-            { params: { page_size: 300 } }
-        )
-        .then((response) => {
-            app.get('/meetings', (req, res) => {
-                // need to rework with RQ response
-                res.status(200).json(response.data.meetings);
-            });
-
-            return Promise.resolve(response);
-        })
-        .catch((error) => {});
-}
-
-function createMeeting2(client, startDate, duration) {
-    return axios
-        .post(
-            API_URL + '/users/me/meetings',
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.REACT_APP_JWT_INTERVIEW}`,
-                    'User-Agent': 'Zoom-api-Jwt-Request',
-                    'content-type': 'application/json',
-                },
-            },
-            {
-                body: {
-                    topic: client,
-                    start_time: startDate,
-                    duration: Number(duration),
-                    type: 2,
-                },
-            }
-        )
-        .then((response) => {
-            return Promise.resolve(response);
-        })
-        .catch((error) => {
-            console.log(
-                '🚀 ~ file: index.js ~ line 80 ~ createMeeting ~ error',
-                error
-            );
-        });
-}
-
 app.post('/meetings', jsonParser, (req, res) => {
-    /* createMeeting(
-        req.body.client,
-        req.body.startDate,
-        req.body.duration
-    ); */
-
     console.log(
         '🚀 ~ file: index.js ~ line 155 ~ app.post ~ req.body',
         req.body
@@ -193,8 +135,56 @@ app.post('/meetings', jsonParser, (req, res) => {
         });
 });
 
+app.patch('/meetings', jsonParser, (req, res) => {
+    console.log(
+        '🚀 ~ file: index.js ~ line 155 ~ app.post ~ req.body',
+        req.body
+    );
+    var options = {
+        method: 'PATCH',
+        uri: 'https://api.zoom.us/v2/users/me/meetings',
+        body: {
+            topic: req.body.client,
+            type: 2,
+            start_time: req.body.startDate + ':00Z',
+            duration: req.body.duration,
+        },
+        auth: {
+            bearer: process.env.REACT_APP_JWT_INTERVIEW,
+        },
+        headers: {
+            'User-Agent': 'Zoom-api-Jwt-Request',
+            'content-type': 'application/json',
+        },
+        json: true, //Parse the JSON string in the response
+    };
+
+    rq(options)
+        .then(function (response) {
+            console.log('🚀 ~ file: index.js ~ UPDATED', response);
+            res.status(200).json([
+                {
+                    uuid: response.uuid,
+                    id: response.id,
+                    host_id: response.host_id,
+                    topic: response.topic,
+                    type: response.type,
+                    start_time: response.start_time,
+                    duration: response.duration,
+                    timezone: response.timezone,
+                    created_at: response.created_at,
+                    join_url: response.join_url,
+                },
+            ]);
+        })
+        .catch(function (err) {
+            // API call failed...
+            console.log('API call failed, reason ', err);
+        });
+});
+
 getListMeeting();
 
 app.listen(9292, () => {
-    console.log('Server');
+    console.log('Server API ZOOM');
 });

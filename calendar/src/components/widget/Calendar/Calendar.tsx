@@ -1,63 +1,84 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
+// plugin calendar
 import FullCalendar from '@fullcalendar/react'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { createMeeting, getListMeeting } from '../../../actions/zoom';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../../../reducers';
-import { IMeeting } from '../../../services/zoom.service';
-import ModalView from '../Modal/ModalView';
-import { useTranslation } from 'react-i18next';
+
+// component
 import { Form } from 'react-bootstrap';
 import Typography from '../Typography/Typography';
+import ModalView from '../Modal/ModalView';
 
+import {
+    createMeeting,
+    getListMeeting,
+    updateMeeting,
+} from '../../../actions/zoom';
+import { IRootState } from '../../../reducers';
+import { IMeeting } from '../../../services/zoom.service';
+
+// utils
+import * as Meeting from '../../../utils/Meetings';
+// constantes
 export const CALENDAR_ID = 'calendarId';
 
-function mapToFullCalendarEvent(
-    meetingEventState: IMeeting[] | undefined
-) {
-    return meetingEventState?.map((meeting: IMeeting) => {
-        return {
-            id: meeting.id.toString(),
-            start: meeting.start_time.replace(':00Z', ':00+02:00'),
-
-            title: meeting.topic,
-        };
-    });
-}
 export interface IModalState {
     name: string;
     startDate: string;
     duration: string;
 }
 
+/**
+ * interface IModalPostMeeting
+ * displayModal         -
+ * setDisplayModal      -
+ * stateCalendar        -
+ * meetingEventState    -
+ */
 interface IModalPostMeeting {
     displayModal: boolean;
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>;
     stateCalendar: string;
     meetingEventState: IMeeting[] | undefined;
 }
+
+/**
+ * Create modal on click event date for POST Meeting ZOOM
+ * @param props interface modal post props
+ * @returns component
+ */
 const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
     const dispatch = useDispatch();
-
     const { t } = useTranslation();
     const [stateForm, setStateForm] = useState<IModalState>({
         name: '',
         startDate: props.stateCalendar.split(':00+')[0],
         duration: '',
     });
+
     useEffect(() => {
         setStateForm({
             ...stateForm,
             startDate: props.stateCalendar.split(':00+')[0],
         });
     }, [props.stateCalendar]);
-    console.log(
-        '🚀 ~ file: Calendar.tsx ~ line 44 ~ stateForm',
-        stateForm
-    );
+
     const handleClose = () => props.setDisplayModal(false);
+    const handleSave = () => {
+        dispatch(
+            createMeeting(
+                stateForm.name,
+                stateForm.startDate,
+                stateForm.duration,
+                props.meetingEventState
+            )
+        );
+        handleClose();
+    };
 
     return (
         <ModalView
@@ -65,21 +86,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
             show={props.displayModal}
             displayModal={props.displayModal}
             setDisplayModal={props.setDisplayModal}
-            handleSave={() => {
-                console.log(
-                    '🚀 ~ file: ModalView.tsx ~ line 31 ~ stateForm',
-                    stateForm
-                );
-                dispatch(
-                    createMeeting(
-                        stateForm.name,
-                        stateForm.startDate,
-                        stateForm.duration,
-                        props.meetingEventState
-                    )
-                );
-                handleClose();
-            }}
+            handleSave={handleSave}
         >
             <Form>
                 <Form.Group className="mb-3" controlId="form">
@@ -142,24 +149,28 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
         </ModalView>
     );
 };
-function findUrl(meetings: IMeeting[] | undefined, topic: string) {
-    if (meetings) {
-        return meetings.find(
-            (meeting: IMeeting) => topic === meeting.topic
-        )?.join_url;
-    } else {
-        return 'no link';
-    }
-}
+
+/**
+ *
+ * @returns
+ */
 const Calendar = (): JSX.Element => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
-    // get my storage
-    const zoom = useSelector((state: IRootState) => state.zoom);
+    const [stateCalendar, setStateCalendar] = useState('');
+    const [displayModal, setDisplayModal] = useState(false);
+    const [displaySum, setDisplaySum] = useState(false);
+    const [focused, setFocused] = useState({
+        topic: '',
+    });
     // event calendar display
     const [meetingEventState, setMeetingEventState] =
         useState<IMeeting[]>();
+
+    // get my storage
+    const zoom = useSelector((state: IRootState) => state.zoom);
+
     /**
      * Initialization component
      * update calendar events
@@ -183,12 +194,6 @@ const Calendar = (): JSX.Element => {
         }
     }, [zoom]);
 
-    const [stateCalendar, setStateCalendar] = useState('');
-    const [displayModal, setDisplayModal] = useState(false);
-    const [displaySum, setDisplaySum] = useState(false);
-    const [focused, setFocused] = useState({
-        topic: '',
-    });
     return (
         <>
             <ModalPostMeeting
@@ -206,9 +211,18 @@ const Calendar = (): JSX.Element => {
                     // todo PUT meeting to update a meeting
                 }}
             >
-                <Typography>{focused.topic}</Typography>
                 <Typography>
-                    {findUrl(meetingEventState, focused.topic)}
+                    <h3>{focused.topic}</h3>
+                </Typography>
+                <Typography>
+                    <a
+                        href={Meeting.findUrl(
+                            meetingEventState,
+                            focused.topic
+                        )}
+                    >
+                        {t('linkMeeting')}
+                    </a>
                 </Typography>
             </ModalView>
             <div id={CALENDAR_ID}>
@@ -216,12 +230,23 @@ const Calendar = (): JSX.Element => {
                     plugins={[timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"
                     editable={true}
-                    events={mapToFullCalendarEvent(meetingEventState)}
+                    events={Meeting.mapToFullCalendarEvent(
+                        meetingEventState
+                    )}
                     droppable={true}
-                    drop={(event) => {
+                    eventDrop={(info) => {
                         console.log(
                             '🚀 ~ file: App.tsx ~ line 57 ~ App ~ event',
-                            event
+                            info.event.title,
+                            info.event.startStr
+                        );
+                        dispatch(
+                            updateMeeting(
+                                info.event.title,
+                                info.event.startStr,
+                                '60',
+                                meetingEventState
+                            )
                         );
                     }}
                     eventClick={(info) => {

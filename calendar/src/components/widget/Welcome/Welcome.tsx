@@ -1,11 +1,20 @@
 import React from 'react';
 import Typography from '../Typography/Typography';
 
+/**
+ *
+ */
 interface IWelcome {
     title: string;
     description: string;
 }
-const Welcome = (props: IWelcome) => {
+
+/**
+ *
+ * @param props
+ * @returns
+ */
+const Welcome = (props: IWelcome): JSX.Element => {
     const { title, description } = props;
     return (
         <header className="jumbotron">

@@ -1,16 +1,11 @@
-import { useEffect } from 'react';
 import React from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { createMeeting, getListMeeting } from '../../../actions/zoom';
-import { IMeeting } from '../../../services/zoom.service';
-import { IModalState } from '../Calendar/Calendar';
 
 import './ModalView.css';
 
 /**
- *
+ * interface IModal
  */
 interface IModal {
     title: string;

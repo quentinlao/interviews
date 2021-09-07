@@ -17,49 +17,68 @@
 
 ## Initialization
 
-# client
+### client port 3000
 
-port 3000
+To start the client, ddl dep `yarn` and to start `yarn start`
 
--   yarn
--   yarn start
+-   `yarn`
+-   `yarn start`
 
-# server
+### server port 9292
 
-port 8080
+To start the server mode to folder `api`
 
--   node index.js
+-   `node index.js`
 
-## Integration test
+### For the interview
 
-# Launch
+Objective not really realize step done and not :
 
--   yarn cypress:open (launch app and cypress)
--   yarn cypress:run (launch test cli)
+<ul>
+<li><strike>Display 1 week calendar</strike></li>
+<li><strike>READ from api zoom all meetings</strike> <b>READ BUG on recall GET doesn't find all records even with param_size 300</b></li>
+<li><strike>CREATE an event from api zoom with calendar</strike></li>
+<li><strike>Creation of test component Cypress</strike></li>
+<li>Creation of project config : <strike>test cypress, prettier, i18n,</strike> typeStyle, <strike>report nyc merge, composeWithDevTools</strike>, eject projec for webpack</li>
+<li>Drag n drop event to calendar</li>
+<li>UPDATE event when dropEvent call</li>
+<li>DELETE event when click on sumerize Modal</li>
+<li>Create a recipe to configure a container with back front open to external for API ZOOM</li>
+</ul>
 
-# Coverage
+# Launch test
 
--   coverage/lcov-report/index.html
+Stop all, test without server (need to mock server api)
+
+-   `yarn cypress:open` (launch app and cypress)
+-   `yarn cypress:run` (launch test cli)
+
+# Coverage report
+
+To check coverage report
+
+-   `coverage/lcov-report/index.html`
 
 ## Information
 
 # Globaly
 
--   Create react app
--   i don't want to configure myself webapck : Script babel -> node_modules/react-scripts/scripts
--   SKIP_PREFLIGHT_CHECK=true env because i don't configure with CRA (ID cypress/code)
+-   Create react app project
+-   i don't want to configure myself webapck : Script babel -> `node_modules/react-scripts/scripts`
+-   `SKIP_PREFLIGHT_CHECK=true` env because i don't configure with CRA (ID cypress/code)
 
 # For me
 
--   dotenv env.dev
--   gitignore add more rules
--   prettierignore / prettierrc rules config
--   settings.json personnal vscode rules todo because prettier.configPath
--   cypress.json to redefine path
+-   `dotenv` env.dev
+-   `gitignore` add more rules
+-   `prettierignore` / prettierrc rules config
+-   `settings.json` personnal vscode rules todo because prettier.configPath
+-   `cypress.json` to redefine path
 -   API Zoom can't fetch from client side https://devforum.zoom.us/t/fetching-user-account-info-from-a-react-spa/25517
+-   `i18n` configuration for translation
 
 # Why not JWT and not OAuth
 
--   Don't want to create an access_token based on API_SECRET to call zoom verification, play with interceptor for refresh token
-    POST /oauth/token -> header Authorization Basic zoom_client_id:zoom_api_secret(b64) -> scope, authorizationServer -> access_token expires_in, token_type bearer -> ressourceServer
--   JWT send to interviewer with delay 1 week token will be expired at 00:00 09/24/2021 2 steps less to program with JWT
+-   Don't want to create an `access_token based` on `API_SECRET` to call zoom verification, play with interceptor for `refresh token`
+    POST /oauth/token -> header `Authorization Basic zoom_client_id:zoom_api_secret`(b64) -> scope, `authorizationServer` -> `access_token` `expires_in`, `token_type bearer` -> `ressourceServer`
+-   JWT send to interviewer with delay 1 week token will be expired at `00:00 09/24/2021` 2 steps less to program with JWT
