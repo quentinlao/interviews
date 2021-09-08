@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import * as Typestyle from 'typestyle';
 import styles from './ModalView.css';
@@ -15,6 +16,7 @@ interface IModal {
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>;
     children: React.ReactNode;
     handleSave: () => void;
+    deleteEvent?: boolean;
 }
 
 /**
@@ -23,6 +25,7 @@ interface IModal {
  * @returns
  */
 const ModalView = (props: IModal): JSX.Element => {
+    const { t } = useTranslation();
     const handleClose = () => props.setDisplayModal(false);
 
     return (
@@ -50,10 +53,10 @@ const ModalView = (props: IModal): JSX.Element => {
                 </Button>
                 <Button
                     id={'SAVE'}
-                    variant="primary"
+                    variant={props.deleteEvent ? 'danger' : 'primary'}
                     onClick={props.handleSave}
                 >
-                    Save
+                    {props.deleteEvent ? t('Delete') : t('Save')}
                 </Button>
             </Modal.Footer>
         </Modal>

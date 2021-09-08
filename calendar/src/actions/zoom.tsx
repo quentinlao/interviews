@@ -6,7 +6,10 @@ import ZoomService, {
 } from '../services/zoom.service';
 import { IHTTPCode } from '../utils/IHttpInterface';
 import { AxiosResponse } from 'axios';
-import { updateMeetingsFromId } from '../utils/Meetings';
+import {
+    deleteMeetingsFromId,
+    updateMeetingsFromId,
+} from '../utils/Meetings';
 
 /**
  * function get all List Meeting
@@ -123,6 +126,37 @@ export const updateMeeting =
                                 startDate,
                                 duration,
                                 client
+                            ),
+                            meetings: meetingEventState,
+                        });
+                    }
+                }
+                return Promise.resolve();
+            },
+            (error) => {
+                dispatch({
+                    type: Meeting.MEETING_FAIL,
+                });
+                return Promise.reject();
+            }
+        );
+    };
+
+export const deleteMeeting =
+    (meetingEventState: IMeeting[] | undefined, idMeeting: string) =>
+    (dispatch: any) => {
+        return ZoomService.deleteMeeting(idMeeting).then(
+            (data: void | AxiosResponse<IResponseAxios>) => {
+                if (data) {
+                    if (
+                        (data as AxiosResponse<IResponseAxios>)
+                            .status == IHTTPCode.NO_CONTENT
+                    ) {
+                        dispatch({
+                            type: Meeting.MEETING_DELETED_SUCCESS,
+                            payload: deleteMeetingsFromId(
+                                idMeeting,
+                                meetingEventState
                             ),
                             meetings: meetingEventState,
                         });

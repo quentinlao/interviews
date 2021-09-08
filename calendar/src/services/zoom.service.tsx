@@ -89,7 +89,7 @@ const createMeeting = (
 };
 
 /**
- * POST a meeting ZOOM API
+ * UPDATE a meeting ZOOM API
  * @param client
  * @param startDate
  * @param duration
@@ -124,8 +124,34 @@ const updateMeeting = (
         });
 };
 
+/**
+ * DELETE a meeting ZOOM API
+ * @returns
+ */
+const deleteMeeting = (idMeeting: string) => {
+    return axios
+        .delete(`${API_URL}/meetings`, {
+            data: { idMeeting },
+        })
+        .then((response: AxiosResponse<IResponseAxios>) => {
+            console.log(
+                '🚀 ~ file: auth.service.tsx ~ line 32 ~ login ~ response',
+                response
+            );
+
+            return Promise.resolve(response);
+        })
+        .catch((error) => {
+            console.log(
+                '🚀 ~ file: zoom.service.tsx ~ line 39 ~ .then ~ error',
+                error
+            );
+        });
+};
+
 export default {
     getListMeeting,
     createMeeting,
     updateMeeting,
+    deleteMeeting,
 };

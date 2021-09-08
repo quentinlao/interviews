@@ -15,6 +15,7 @@ import ModalView from '../Modal/ModalView';
 
 import {
     createMeeting,
+    deleteMeeting,
     getListMeeting,
     updateMeeting,
 } from '../../../actions/zoom';
@@ -24,6 +25,7 @@ import { IMeeting } from '../../../services/zoom.service';
 // utils
 import * as Meeting from '../../../utils/Meetings';
 import moment from 'moment';
+import { truncate } from 'cypress/types/lodash';
 // constantes
 export const CALENDAR_ID = 'calendarId';
 
@@ -177,6 +179,7 @@ const Calendar = (): JSX.Element => {
     const [displaySum, setDisplaySum] = useState(false);
     const [focused, setFocused] = useState({
         topic: '',
+        id: '',
     });
     // event calendar display
     const [meetingEventState, setMeetingEventState] =
@@ -221,8 +224,13 @@ const Calendar = (): JSX.Element => {
                 show={displaySum}
                 displayModal={displaySum}
                 setDisplayModal={setDisplaySum}
+                deleteEvent={true}
                 handleSave={() => {
-                    // todo PUT meeting to update a meeting
+                    // DELETE a meeting
+                    dispatch(
+                        deleteMeeting(meetingEventState, focused.id)
+                    );
+                    setDisplaySum(false);
                 }}
             >
                 <Typography>
@@ -271,6 +279,7 @@ const Calendar = (): JSX.Element => {
                         );
                         setFocused({
                             topic: info.event.title,
+                            id: info.event.id,
                         });
                         setDisplaySum(true);
                     }}

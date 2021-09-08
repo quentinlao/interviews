@@ -46,9 +46,10 @@ Objective not really realize step done and not :
 <li><strike>READ from api zoom all meetings</strike> <b>READ BUG on recall GET doesn't find all records even with param_size 300</b></li>
 <li><strike>CREATE an event from api zoom with calendar</strike></li>
 <li><strike>Creation of test component Cypress</strike></li>
-<li>Creation of project config : <strike>test cypress, prettier, i18n,</strike> typeStyle, <strike>report nyc merge, composeWithDevTools</strike>, eject projec for webpack</li>
+<li>Creation of project config : <strike>test cypress, prettier, i18n, typeStyle, report nyc merge, composeWithDevTools</strike>, eject projec for webpack</li>
 <li>Drag n drop event to calendar</li>
-<li>UPDATE event when dropEvent call</li>
+<li><strike>UPDATE event when dropEvent call</strike></li>
+<li><strike>Rule to show warning not 1pm to 2 pm</strike></li>
 <li>DELETE event when click on sumerize Modal</li>
 <li>Create a recipe to configure a container with back front open to external for API ZOOM</li>
 </ul>
@@ -89,3 +90,46 @@ To check coverage report
 -   Don't want to create an `access_token based` on `API_SECRET` to call zoom verification, play with interceptor for `refresh token`
     POST /oauth/token -> header `Authorization Basic zoom_client_id:zoom_api_secret`(b64) -> scope, `authorizationServer` -> `access_token` `expires_in`, `token_type bearer` -> `ressourceServer`
 -   JWT send to interviewer with delay 1 week token will be expired at `00:00 09/24/2021` 2 steps less to program with JWT
+
+# API ZOOM
+
+Configuration
+`{{baseUrl}}` = https://api.zoom.us/v2
+`me` = only 1 user
+
+READ all meeting
+
+`curl GET {{baseUrl}}/users/me/meetings?page_size=300`
+headers : Bearer token
+
+CREATE a meeting
+
+`curl POST {{baseUrl}}/users/me/meetings`
+headers :
+
+-   Authorization : Bearer token
+-   Content-Type : application/json
+    body :
+    {
+    "duration": 60,
+    "start_time": "2021-09-06T10:00:00Z",
+    "topic": "hello calendar",
+    "type": 2
+    }
+
+UPDATE a meeting
+
+`curl PATCH {{baseUrl}}/meetings/idMeeting`
+
+-   Authorization : Bearer token
+-   Content-Type : application/json
+    {
+    "duration": 60,
+    "start_time": "2021-09-06T10:00:00Z",
+    "topic": "hello calendar",
+    "type": 2
+    }
+
+DELETE a meeting
+
+`curl DELETE {{baseUrl}}/meetings/idMeeting`

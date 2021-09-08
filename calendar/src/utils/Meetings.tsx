@@ -51,3 +51,12 @@ export function updateMeetingsFromId(
         }
     });
 }
+
+export function deleteMeetingsFromId(
+    idMeeting: string,
+    meetings: IMeeting[] | undefined
+) {
+    return meetings?.filter((meeting: IMeeting) => {
+        return meeting.id !== Number(idMeeting);
+    });
+}

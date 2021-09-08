@@ -50,12 +50,12 @@ function encodeQueryData(data) {
     return ret.join('&');
 }
 
-function getListMeeting() {
+app.get('/meetings', jsonParser, (req, res) => {
     const data = { page_size: 300 };
 
     const queryString = encodeQueryData(data);
 
-    const options = {
+    var options = {
         method: 'GET',
         uri: `https://api.zoom.us/v2/users/me/meetings?${queryString}`,
         auth: {
@@ -70,25 +70,19 @@ function getListMeeting() {
 
     rq(options)
         .then(function (response) {
-            app.get('/meetings', (req, res) => {
-                console.log(
-                    '🚀 ~ file: index.js ~ line 59 ~ app.get ~ response.meetings',
-                    response.meetings.length
-                );
-                res.status(200).json(response.meetings);
-            });
+            console.log(
+                '🚀 ~ file: index.js ~ line 59 ~ app.get ~ response.meetings',
+                response.meetings.length
+            );
+            res.status(200).json(response.meetings);
         })
         .catch(function (err) {
             // API call failed...
             console.log('API call failed, reason ', err);
         });
-}
+});
 
 app.post('/meetings', jsonParser, (req, res) => {
-    console.log(
-        '🚀 ~ file: index.js ~ line 155 ~ app.post ~ req.body',
-        req.body
-    );
     var options = {
         method: 'POST',
         uri: 'https://api.zoom.us/v2/users/me/meetings',
@@ -110,10 +104,6 @@ app.post('/meetings', jsonParser, (req, res) => {
 
     rq(options)
         .then(function (response) {
-            console.log(
-                '🚀 ~ file: index.js ~ line 171 ~ response',
-                response
-            );
             res.status(200).json([
                 {
                     uuid: response.uuid,
@@ -136,10 +126,6 @@ app.post('/meetings', jsonParser, (req, res) => {
 });
 
 app.patch('/meetings', jsonParser, (req, res) => {
-    console.log(
-        '🚀 ~ file: index.js ~ line 155 ~ app.post ~ req.body',
-        req.body
-    );
     var options = {
         method: 'PATCH',
         uri: `https://api.zoom.us/v2/meetings/${req.body.idMeeting}`,
@@ -161,7 +147,6 @@ app.patch('/meetings', jsonParser, (req, res) => {
 
     rq(options)
         .then(function (response) {
-            console.log('🚀 ~ file: index.js ~ UPDATED', response);
             res.status(204).json([]);
         })
         .catch(function (err) {
@@ -170,7 +155,28 @@ app.patch('/meetings', jsonParser, (req, res) => {
         });
 });
 
-getListMeeting();
+app.delete('/meetings', jsonParser, (req, res) => {
+    var options = {
+        method: 'DELETE',
+        uri: `https://api.zoom.us/v2/meetings/${req.body.idMeeting}`,
+        auth: {
+            bearer: process.env.REACT_APP_JWT_INTERVIEW,
+        },
+        headers: {
+            'User-Agent': 'Zoom-api-Jwt-Request',
+        },
+        json: true, //Parse the JSON string in the response
+    };
+
+    rq(options)
+        .then(function (response) {
+            res.status(204).json([]);
+        })
+        .catch(function (err) {
+            // API call failed...
+            console.log('API call failed, reason ', err);
+        });
+});
 
 app.listen(9292, () => {
     console.log('Server API ZOOM');

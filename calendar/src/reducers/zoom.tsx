@@ -17,34 +17,22 @@ export default function (
     action: { type: Meeting; payload: any }
 ) {
     const { type, payload } = action;
-    console.log('🚀 ~ file: zoom.tsx ~ line 10 ~ action', action);
-
     switch (type) {
         case Meeting.MEETING_READ_SUCCESS:
-            console.log(
-                '🚀 ~ file: zoom.tsx ~ line 9 ~ state',
-                state,
-                payload
-            );
             return {
                 ...state,
                 meetings: payload,
             };
         case Meeting.MEETING_CREATED_SUCCESS:
-            console.log(
-                '🚀 ~ file: zoom.tsx ~ line 33 ~ Meeting.MEETING_CREATED_SUCCESS',
-                state,
-                action
-            );
             return {
                 ...state,
                 meetings: [...state.meetings, ...payload],
             };
         case Meeting.MEETING_UPDATED_SUCCESS:
-            console.log(
-                '🚀 ~ file: zoom.tsx ~ line 33 ~ Meeting.MEETING_UPDATED_SUCCESS',
-                state
-            );
+            return {
+                meetings: payload,
+            };
+        case Meeting.MEETING_DELETED_SUCCESS:
             return {
                 meetings: payload,
             };
