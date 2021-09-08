@@ -23,6 +23,7 @@ import { IMeeting } from '../../../services/zoom.service';
 
 // utils
 import * as Meeting from '../../../utils/Meetings';
+import moment from 'moment';
 // constantes
 export const CALENDAR_ID = 'calendarId';
 
@@ -79,6 +80,18 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
         );
         handleClose();
     };
+    const alertComponent = (
+        <div className="alert alert-warning" role="alert">
+            {t('warningDate')}
+        </div>
+    );
+    let displayWarning = false;
+    if (stateForm.startDate) {
+        const hourmi = stateForm.startDate.split('T')[1];
+        const hour = Number(hourmi.split(':')[0]);
+
+        displayWarning = hour >= 13 && hour <= 14;
+    }
 
     return (
         <ModalView
@@ -145,6 +158,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
                 <Form.Text className="text-muted">
                     {t('durationMinute')}
                 </Form.Text>
+                {displayWarning && alertComponent}
             </Form>
         </ModalView>
     );
@@ -235,13 +249,7 @@ const Calendar = (): JSX.Element => {
                     )}
                     droppable={true}
                     eventDrop={(info) => {
-                        console.log(
-                            '🚀 ~ file: App.tsx ~ line 57 ~ App ~ event',
-                            info.event.title,
-                            info.event.startStr,
-                            info.event.id
-                        );
-
+                        // update on drop event to calendar
                         dispatch(
                             updateMeeting(
                                 info.event.title,
@@ -254,7 +262,6 @@ const Calendar = (): JSX.Element => {
                     }}
                     eventClick={(info) => {
                         // handle click event to display summerize
-                        // TODO : Create a modal with my event summerize and a link to launch meeting
                         console.log(
                             '🚀 ~ file: App.tsx ~ line 64 ~ App ~ info',
                             info.event.title,
@@ -269,7 +276,6 @@ const Calendar = (): JSX.Element => {
                     }}
                     dateClick={(info) => {
                         // handle click to display a modal to add event
-                        // TODO : Create a modal to create a event
                         setDisplayModal(true);
                         setStateCalendar(info.dateStr);
                         console.log(

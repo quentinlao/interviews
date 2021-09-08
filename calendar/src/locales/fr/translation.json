@@ -8,5 +8,6 @@
     "clientDurationLabel": "Duration : ",
     "nameClientTopic": "Name client will be used to title meeting",
     "duration": "Duration",
-    "durationMinute": "Choose a duration in minute"
+    "durationMinute": "Choose a duration in minute",
+    "warningDate": "Lunch time warning !"
 }
