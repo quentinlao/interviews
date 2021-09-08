@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
 
-import './ModalView.css';
+import * as Typestyle from 'typestyle';
+import styles from './ModalView.css';
 
 /**
  * interface IModal
@@ -25,9 +26,18 @@ const ModalView = (props: IModal): JSX.Element => {
     const handleClose = () => props.setDisplayModal(false);
 
     return (
-        <Modal id={'MODAL_ID'} show={props.show} onHide={handleClose}>
+        <Modal
+            id={'MODAL_ID'}
+            show={props.show}
+            onHide={handleClose}
+            className={Typestyle.classes(styles.red)}
+        >
             <Modal.Header closeButton>
-                <Modal.Title>{props.title}</Modal.Title>
+                <Modal.Title
+                    className={Typestyle.classes(styles.red)}
+                >
+                    {props.title}
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>{props.children}</Modal.Body>
             <Modal.Footer>

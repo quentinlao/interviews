@@ -34,6 +34,7 @@ cypress/screenshots
 .nyc_output
 
 # env
+settings.json
 .env
 /api/.env
 apiZoom

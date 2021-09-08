@@ -5,6 +5,7 @@ import store from './store';
 import './index.css';
 import App from './App';
 import './i18n';
+import { forceRenderStyles } from 'typestyle';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -12,3 +13,4 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
+forceRenderStyles();
