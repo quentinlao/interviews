@@ -25,7 +25,7 @@ import { IMeeting } from '../../../services/zoom.service';
 // utils
 import * as Meeting from '../../../utils/Meetings';
 import moment from 'moment';
-import { truncate } from 'cypress/types/lodash';
+
 // constantes
 export const CALENDAR_ID = 'calendarId';
 
@@ -170,7 +170,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
  *
  * @returns
  */
-const Calendar = (): JSX.Element => {
+const CalendarView = (): JSX.Element => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
@@ -287,10 +287,6 @@ const Calendar = (): JSX.Element => {
                         // handle click to display a modal to add event
                         setDisplayModal(true);
                         setStateCalendar(info.dateStr);
-                        console.log(
-                            '🚀 ~ file: App.tsx ~ line 74 ~ App ~ info',
-                            info
-                        );
                     }}
                 />
             </div>
@@ -298,4 +294,4 @@ const Calendar = (): JSX.Element => {
     );
 };
 
-export default Calendar;
+export default CalendarView;

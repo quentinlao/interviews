@@ -43,15 +43,17 @@ Objective not really realize step done and not :
 
 <ul>
 <li><strike>Display 1 week calendar</strike></li>
-<li><strike>READ from api zoom all meetings</strike> <b>READ BUG on recall GET doesn't find all records even with param_size 300</b></li>
+<li><strike>READ from api zoom all meetings <b>READ BUG on recall GET doesn't find all records even with param_size 300</b></strike></li>
 <li><strike>CREATE an event from api zoom with calendar</strike></li>
 <li><strike>Creation of test component Cypress</strike></li>
 <li>Creation of project config : <strike>test cypress, prettier, i18n, typeStyle, report nyc merge, composeWithDevTools</strike>, eject projec for webpack</li>
 <li>Drag n drop event to calendar</li>
 <li><strike>UPDATE event when dropEvent call</strike></li>
 <li><strike>Rule to show warning not 1pm to 2 pm</strike></li>
-<li>DELETE event when click on sumerize Modal</li>
+<li><strike>DELETE event when click on sumerize Modal</strike></li>
 <li>Create a recipe to configure a container with back front open to external for API ZOOM</li>
+<li>Need rework : Duration is not use because meeting is fixed to 1 hour, rework date with moment js but no time at all</li>
+
 </ul>
 
 # Launch test

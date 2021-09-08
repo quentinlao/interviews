@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Calendar from '../widget/Calendar/Calendar';
-import Typography from '../widget/Typography/Typography';
+import CalendarView from '../widget/CalendarView/CalendarView';
 import Welcome from '../widget/Welcome/Welcome';
 
 const Home = () => {
@@ -12,7 +11,7 @@ const Home = () => {
                 title={t('calendar')}
                 description={t('description')}
             />
-            <Calendar />
+            <CalendarView />
         </div>
     );
 };
