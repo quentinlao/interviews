@@ -142,7 +142,7 @@ app.patch('/meetings', jsonParser, (req, res) => {
     );
     var options = {
         method: 'PATCH',
-        uri: 'https://api.zoom.us/v2/users/me/meetings',
+        uri: `https://api.zoom.us/v2/meetings/${req.body.idMeeting}`,
         body: {
             topic: req.body.client,
             type: 2,
@@ -162,20 +162,7 @@ app.patch('/meetings', jsonParser, (req, res) => {
     rq(options)
         .then(function (response) {
             console.log('🚀 ~ file: index.js ~ UPDATED', response);
-            res.status(200).json([
-                {
-                    uuid: response.uuid,
-                    id: response.id,
-                    host_id: response.host_id,
-                    topic: response.topic,
-                    type: response.type,
-                    start_time: response.start_time,
-                    duration: response.duration,
-                    timezone: response.timezone,
-                    created_at: response.created_at,
-                    join_url: response.join_url,
-                },
-            ]);
+            res.status(204).json([]);
         })
         .catch(function (err) {
             // API call failed...

@@ -43,10 +43,11 @@ export default function (
         case Meeting.MEETING_UPDATED_SUCCESS:
             console.log(
                 '🚀 ~ file: zoom.tsx ~ line 33 ~ Meeting.MEETING_UPDATED_SUCCESS',
-                state,
-                action
+                state
             );
-            break;
+            return {
+                meetings: payload,
+            };
         default:
             return { ...state, meetings: [] };
     }

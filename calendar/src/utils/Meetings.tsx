@@ -12,7 +12,6 @@ export function mapToFullCalendarEvent(
         return {
             id: meeting.id.toString(),
             start: meeting.start_time.replace(':00Z', ':00+02:00'),
-
             title: meeting.topic,
         };
     });
@@ -35,4 +34,20 @@ export function findUrl(
     } else {
         return 'no link';
     }
+}
+
+export function updateMeetingsFromId(
+    idMeeting: string,
+    meetings: IMeeting[] | undefined,
+    start_time: string,
+    duration: string,
+    topic: string
+) {
+    return meetings?.map((meeting: IMeeting) => {
+        if (meeting.id === Number(idMeeting)) {
+            return { ...meeting, start_time, duration, topic };
+        } else {
+            return meeting;
+        }
+    });
 }

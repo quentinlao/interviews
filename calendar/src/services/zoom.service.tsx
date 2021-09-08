@@ -98,13 +98,15 @@ const createMeeting = (
 const updateMeeting = (
     client: string,
     startDate: string,
-    duration: string
+    duration: string,
+    idMeeting: string
 ) => {
     return axios
-        .patch(API_URL + '/meetings', {
+        .patch(`${API_URL}/meetings`, {
             client,
             startDate,
             duration,
+            idMeeting,
         })
         .then((response: AxiosResponse<IResponseAxios>) => {
             console.log(

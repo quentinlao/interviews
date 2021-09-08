@@ -6,6 +6,7 @@ import ZoomService, {
 } from '../services/zoom.service';
 import { IHTTPCode } from '../utils/IHttpInterface';
 import { AxiosResponse } from 'axios';
+import { updateMeetingsFromId } from '../utils/Meetings';
 
 /**
  * function get all List Meeting
@@ -94,13 +95,15 @@ export const updateMeeting =
         client: string,
         startDate: string,
         duration: string,
-        meetingEventState: IMeeting[] | undefined
+        meetingEventState: IMeeting[] | undefined,
+        idMeeting: string
     ) =>
     (dispatch: any) => {
         return ZoomService.updateMeeting(
             client,
             startDate,
-            duration
+            duration,
+            idMeeting
         ).then(
             (data: void | AxiosResponse<IResponseAxios>) => {
                 console.log(
@@ -108,16 +111,22 @@ export const updateMeeting =
                     data
                 );
                 if (data) {
-                    /* if (
+                    if (
                         (data as AxiosResponse<IResponseAxios>)
-                            .status == IHTTPCode.SUCCESS
-                    ) { */
-                    dispatch({
-                        type: Meeting.MEETING_UPDATED_SUCCESS,
-                        payload: data.data,
-                        meetings: meetingEventState,
-                    });
-                    /*  } */
+                            .status == IHTTPCode.NO_CONTENT
+                    ) {
+                        dispatch({
+                            type: Meeting.MEETING_UPDATED_SUCCESS,
+                            payload: updateMeetingsFromId(
+                                idMeeting,
+                                meetingEventState,
+                                startDate,
+                                duration,
+                                client
+                            ),
+                            meetings: meetingEventState,
+                        });
+                    }
                 }
                 return Promise.resolve();
             },

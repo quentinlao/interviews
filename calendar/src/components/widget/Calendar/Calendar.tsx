@@ -238,14 +238,17 @@ const Calendar = (): JSX.Element => {
                         console.log(
                             '🚀 ~ file: App.tsx ~ line 57 ~ App ~ event',
                             info.event.title,
-                            info.event.startStr
+                            info.event.startStr,
+                            info.event.id
                         );
+
                         dispatch(
                             updateMeeting(
                                 info.event.title,
                                 info.event.startStr,
                                 '60',
-                                meetingEventState
+                                meetingEventState,
+                                info.event.id
                             )
                         );
                     }}
