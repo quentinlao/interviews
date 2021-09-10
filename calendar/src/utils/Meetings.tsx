@@ -6,12 +6,12 @@ import { IMeeting } from '../services/zoom.service';
  * @returns calendar event
  */
 export function mapToFullCalendarEvent(
-    meetingEventState: IMeeting[] | undefined
+    meetingEventState: IMeeting[]
 ) {
     return meetingEventState?.map((meeting: IMeeting) => {
         return {
             id: meeting.id.toString(),
-            start: meeting.start_time.replace(':00Z', ':00+02:00'),
+            start: meeting.start_time,
             title: meeting.topic,
         };
     });
@@ -23,10 +23,7 @@ export function mapToFullCalendarEvent(
  * @param topic title
  * @returns string url event
  */
-export function findUrl(
-    meetings: IMeeting[] | undefined,
-    topic: string
-) {
+export function findUrl(meetings: IMeeting[], topic: string) {
     if (meetings) {
         return meetings.find(
             (meeting: IMeeting) => topic === meeting.topic
@@ -38,7 +35,7 @@ export function findUrl(
 
 export function updateMeetingsFromId(
     idMeeting: string,
-    meetings: IMeeting[] | undefined,
+    meetings: IMeeting[],
     start_time: string,
     duration: string,
     topic: string
@@ -54,7 +51,7 @@ export function updateMeetingsFromId(
 
 export function deleteMeetingsFromId(
     idMeeting: string,
-    meetings: IMeeting[] | undefined
+    meetings: IMeeting[]
 ) {
     return meetings?.filter((meeting: IMeeting) => {
         return meeting.id !== Number(idMeeting);

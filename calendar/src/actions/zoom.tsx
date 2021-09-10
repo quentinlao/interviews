@@ -17,8 +17,7 @@ import {
  * @returns promise
  */
 export const getListMeeting =
-    (meetingEventState: IMeeting[] | undefined) =>
-    (dispatch: any) => {
+    (meetingEventState: IMeeting[]) => (dispatch: any) => {
         return ZoomService.getListMeeting().then(
             (data: void | AxiosResponse<IResponseAxios>) => {
                 if (data) {
@@ -57,7 +56,7 @@ export const createMeeting =
         client: string,
         startDate: string,
         duration: string,
-        meetingEventState: IMeeting[] | undefined
+        meetingEventState: IMeeting[]
     ) =>
     (dispatch: any) => {
         return ZoomService.createMeeting(
@@ -98,7 +97,7 @@ export const updateMeeting =
         client: string,
         startDate: string,
         duration: string,
-        meetingEventState: IMeeting[] | undefined,
+        meetingEventState: IMeeting[],
         idMeeting: string
     ) =>
     (dispatch: any) => {
@@ -143,7 +142,7 @@ export const updateMeeting =
     };
 
 export const deleteMeeting =
-    (meetingEventState: IMeeting[] | undefined, idMeeting: string) =>
+    (meetingEventState: IMeeting[], idMeeting: string) =>
     (dispatch: any) => {
         return ZoomService.deleteMeeting(idMeeting).then(
             (data: void | AxiosResponse<IResponseAxios>) => {

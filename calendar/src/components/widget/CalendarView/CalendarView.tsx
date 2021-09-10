@@ -24,7 +24,7 @@ import { IMeeting } from '../../../services/zoom.service';
 
 // utils
 import * as Meeting from '../../../utils/Meetings';
-import moment from 'moment';
+import moment, { utc } from 'moment';
 
 // constantes
 export const CALENDAR_ID = 'calendarId';
@@ -46,7 +46,7 @@ interface IModalPostMeeting {
     displayModal: boolean;
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>;
     stateCalendar: string;
-    meetingEventState: IMeeting[] | undefined;
+    meetingEventState: IMeeting[];
 }
 
 /**
@@ -59,41 +59,26 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
     const { t } = useTranslation();
     const [stateForm, setStateForm] = useState<IModalState>({
         name: '',
-        startDate: props.stateCalendar.split(':00+')[0],
+        startDate: props.stateCalendar,
         duration: '',
     });
 
     useEffect(() => {
         setStateForm({
             ...stateForm,
-            startDate: props.stateCalendar.split(':00+')[0],
+            startDate: props.stateCalendar,
         });
     }, [props.stateCalendar]);
 
+    console.log(stateForm);
     const handleClose = () => props.setDisplayModal(false);
-    const handleSave = () => {
-        dispatch(
-            createMeeting(
-                stateForm.name,
-                stateForm.startDate,
-                stateForm.duration,
-                props.meetingEventState
-            )
-        );
-        handleClose();
-    };
+    const handleSave = () => {};
     const alertComponent = (
         <div className="alert alert-warning" role="alert">
             {t('warningDate')}
         </div>
     );
     let displayWarning = false;
-    if (stateForm.startDate) {
-        const hourmi = stateForm.startDate.split('T')[1];
-        const hour = Number(hourmi.split(':')[0]);
-
-        displayWarning = hour >= 13 && hour <= 14;
-    }
 
     return (
         <ModalView
@@ -134,12 +119,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
                     value={stateForm.startDate}
                     onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
-                    ) => {
-                        setStateForm({
-                            ...stateForm,
-                            startDate: event.target.value,
-                        });
-                    }}
+                    ) => {}}
                 />
 
                 <Form.Label>{t('clientDurationLabel')}</Form.Label>
@@ -173,20 +153,32 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
 const CalendarView = (): JSX.Element => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const [displayModal, setDisplayModal] = useState(false);
 
     const [stateCalendar, setStateCalendar] = useState('');
-    const [displayModal, setDisplayModal] = useState(false);
     const [displaySum, setDisplaySum] = useState(false);
     const [focused, setFocused] = useState({
         topic: '',
         id: '',
     });
     // event calendar display
-    const [meetingEventState, setMeetingEventState] =
-        useState<IMeeting[]>();
+    const [meetingEventState, setMeetingEventState] = useState<
+        IMeeting[]
+    >([]);
+    console.log(
+        '🚀 ~ file: CalendarView.tsx ~ line 166 ~ meetingEventState',
+        meetingEventState
+    );
 
     // get my storage
     const zoom = useSelector((state: IRootState) => state.zoom);
+    /**
+     * Subscribe to each change storage zoom
+     * MeetingEvents setted
+     */
+    useEffect(() => {
+        setMeetingEventState(zoom.meetings);
+    }, [zoom]);
 
     /**
      * Initialization component
@@ -195,21 +187,6 @@ const CalendarView = (): JSX.Element => {
     useEffect(() => {
         dispatch(getListMeeting(meetingEventState));
     }, []);
-
-    /**
-     * Subscribe to each change storage zoom
-     * MeetingEvents setted
-     */
-    useEffect(() => {
-        if (zoom.meetings.length > 1) {
-            setMeetingEventState(zoom.meetings);
-        } else if (meetingEventState) {
-            setMeetingEventState([
-                ...meetingEventState,
-                ...zoom.meetings,
-            ]);
-        }
-    }, [zoom]);
 
     return (
         <>
@@ -252,41 +229,35 @@ const CalendarView = (): JSX.Element => {
                     plugins={[timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"
                     editable={true}
+                    timeZone={'UTC'}
                     events={Meeting.mapToFullCalendarEvent(
                         meetingEventState
                     )}
                     droppable={true}
                     eventDrop={(info) => {
                         // update on drop event to calendar
-                        dispatch(
-                            updateMeeting(
-                                info.event.title,
-                                info.event.startStr,
-                                '60',
-                                meetingEventState,
-                                info.event.id
-                            )
-                        );
                     }}
                     eventClick={(info) => {
                         // handle click event to display summerize
                         console.log(
                             '🚀 ~ file: App.tsx ~ line 64 ~ App ~ info',
                             info.event.title,
-                            info.jsEvent.pageX,
-                            info.jsEvent.pageY,
-                            info.view.type
+                            info.event
                         );
-                        setFocused({
-                            topic: info.event.title,
-                            id: info.event.id,
-                        });
-                        setDisplaySum(true);
                     }}
                     dateClick={(info) => {
                         // handle click to display a modal to add event
+                        console.log(
+                            '🚀 ~ file: App.tsx ~ line 64 ~ App ~ info',
+                            info
+                        );
+                        setStateCalendar(
+                            moment
+                                .utc(info.date)
+                                .local()
+                                .format('YYYY-MM-DDTHH:mm')
+                        );
                         setDisplayModal(true);
-                        setStateCalendar(info.dateStr);
                     }}
                 />
             </div>
