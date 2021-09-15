@@ -62,6 +62,13 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
         startDate: props.stateCalendar,
         duration: '',
     });
+    console.log(
+        '🚀 ~ file: CalendarView.tsx ~ line 65 ~ startDate',
+        moment
+            .utc(stateForm.startDate)
+            .local()
+            .format('YYYY-MM-DDTHH:mm:ss')
+    );
 
     useEffect(() => {
         setStateForm({
@@ -72,7 +79,17 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
 
     console.log(stateForm);
     const handleClose = () => props.setDisplayModal(false);
-    const handleSave = () => {};
+    const handleSave = () => {
+        dispatch(
+            createMeeting(
+                stateForm.name,
+                stateForm.startDate,
+                stateForm.duration,
+                props.meetingEventState
+            )
+        );
+        handleClose();
+    };
     const alertComponent = (
         <div className="alert alert-warning" role="alert">
             {t('warningDate')}
@@ -85,7 +102,7 @@ const ModalPostMeeting = (props: IModalPostMeeting): JSX.Element => {
             title={t('createMeeting')}
             show={props.displayModal}
             displayModal={props.displayModal}
-            setDisplayModal={props.setDisplayModal}
+            setDisplayModal={handleClose}
             handleSave={handleSave}
         >
             <Form>

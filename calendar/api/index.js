@@ -89,7 +89,7 @@ app.post('/meetings', jsonParser, (req, res) => {
         body: {
             topic: req.body.client,
             type: 2,
-            start_time: req.body.startDate + ':00Z',
+            start_time: req.body.startDate,
             duration: req.body.duration,
         },
         auth: {
@@ -104,6 +104,10 @@ app.post('/meetings', jsonParser, (req, res) => {
 
     rq(options)
         .then(function (response) {
+            console.log(
+                '🚀 ~ file: index.js ~ line 107 ~ response',
+                response
+            );
             res.status(200).json([
                 {
                     uuid: response.uuid,
@@ -134,6 +138,7 @@ app.patch('/meetings', jsonParser, (req, res) => {
             type: 2,
             start_time: req.body.startDate + ':00Z',
             duration: req.body.duration,
+            timezone: 'UTC',
         },
         auth: {
             bearer: process.env.REACT_APP_JWT_INTERVIEW,
