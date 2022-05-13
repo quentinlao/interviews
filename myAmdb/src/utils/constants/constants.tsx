@@ -1,2 +1,2 @@
-export const API_URL = '.';
-export const JSON_PLACE_HOLDER_API = 'https://jsonplaceholder.typicode.com';
+export const API_AMBD_API = 'https://api.themoviedb.org/3/';
+export const URL_IMAGE = 'https://image.tmdb.org/t/p/w500';

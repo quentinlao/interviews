@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
@@ -14,6 +15,7 @@ const { PORT: port } = process.env;
 const devServer = {
     port,
     open: true,
+    historyApiFallback: true,
 };
 
 module.exports = {
@@ -47,7 +49,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js', '.json'],
     },
 
-    plugins: [htmlPlugin],
+    plugins: [htmlPlugin, new Dotenv()],
     output: {
         path: path.resolve(__dirname, 'build'),
         publicPath: '/',

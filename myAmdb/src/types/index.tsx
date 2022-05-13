@@ -1,11 +1,22 @@
-export interface HelloWorldInterface {
-    title: string;
-    description: string;
+export interface IResponseAmdb {
+    page: number;
+    results: IMovie[];
+    total_pages: number;
+    total_results: number;
 }
 
-export interface ITodo {
-    userId: number;
+export interface IMovie {
+    backdrop_path: string;
+    first_air_date: string;
+    genre_ids: number[];
     id: number;
-    title: string;
-    body: string;
+    name: string;
+    origin_country: string[];
+    original_language: string;
+    original_name: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    vote_average: number;
+    vote_count: number;
 }

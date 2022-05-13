@@ -11,8 +11,8 @@
         "target": "esnext",
         "plugins": [{ "name": "typescript-plugin-css-modules" }],
         "baseUrl": ".", // ./src to shorthen import
-        "types": ["jest", "cypress"]
+        "types": ["jest", "cypress", "node"]
     },
     "exclude": ["node_modules"],
-    "include": ["src"]
+    "include": ["src", "src/pages/.tsx"]
 }
