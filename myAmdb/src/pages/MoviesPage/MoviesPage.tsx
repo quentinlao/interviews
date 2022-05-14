@@ -1,11 +1,10 @@
 import { IconButton, ImageList, ImageListItem, ImageListItemBar, Typography } from '@mui/material';
 import { NavLink, Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import { Input } from '@mui/material';
-import MovieService from '../../api/movie.service';
-import { IMovie, IResponseAmdb } from 'src/types';
-import { useQuery } from 'react-query';
+import { IMovie } from '../../types';
 import InfoIcon from '@mui/icons-material/Info';
 import { URL_IMAGE } from '../../utils/constants/constants';
+import { useAppSelector } from '../../hooks/hooks';
 
 interface IQueryNavLinkProps {
     key: number;
@@ -22,20 +21,7 @@ function QueryNavLink(props: IQueryNavLinkProps) {
 }
 
 export const MoviesPage = (): JSX.Element => {
-    // Queries
-    const {
-        isLoading: isLoadingMovies,
-        isError: isErrorMovies,
-        data: movies,
-        error: errorMovies,
-    } = useQuery<IResponseAmdb, Error>('movies', async () => MovieService.getDiscover());
-
-    if (isLoadingMovies) {
-        return <span>Loading...</span>;
-    }
-    if (isErrorMovies) {
-        return <span>Error: {errorMovies.message}</span>;
-    }
+    const movies = useAppSelector((state) => state.movie);
     const myMovies = movies?.results;
 
     const [searchParams, setSearchParams] = useSearchParams({ replace: true });
@@ -96,6 +82,7 @@ export const MoviesPage = (): JSX.Element => {
                         ))}
                 </>
             </ImageList>
+
             <Outlet />
         </>
     );
