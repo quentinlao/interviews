@@ -1,13 +1,14 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import './styles/globals.css';
 
 import store from './store';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { PopularityPage } from './pages/PopularityPage/PopularityPage';
+import { PopularityPage } from './pages/popularityPage/popularityPage';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
-import { MoviesPage } from './pages/MoviesPage/MoviesPage';
-import { HomePage } from './pages/HomePage/HomePage';
-import { MoviePage } from './pages/MoviePage/MoviePage';
+import { MoviesPage } from './pages/moviesPage/moviesPage';
+import { HomePage } from './pages/homePage/homePage';
+import { MoviePage } from './pages/moviePage/moviePage';
 
 const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
 

@@ -1,0 +1,26 @@
+.contentBarView {
+    left: 20%;
+    width: 80%;
+    background: rgb(174, 224, 238);
+    background-image: linear-gradient(
+        to right top,
+        #ffebf6,
+        #faecfa,
+        #f4edfd,
+        #eeeeff,
+        #e8efff,
+        #e9f0ff,
+        #eaf0ff,
+        #ebf1ff,
+        #f2f2ff,
+        #f8f4fe,
+        #fcf6fd,
+        #fff9fd
+    );
+    height: 100%;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    overflow-y: auto;
+}

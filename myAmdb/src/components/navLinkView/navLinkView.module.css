@@ -1,0 +1,16 @@
+.navigationActive,
+.navigation {
+    text-decoration: none;
+    list-style: none;
+    font-size: 18px;
+}
+
+.navigationActive {
+    color: white;
+    opacity: 1;
+    font-weight: 600;
+}
+.navigation {
+    color: white;
+    opacity: 0.8;
+}
