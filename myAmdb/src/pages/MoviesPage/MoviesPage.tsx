@@ -1,13 +1,25 @@
-import { IconButton, ImageList, ImageListItem, ImageListItemBar, InputBase, Paper, Typography } from '@mui/material';
+import {
+    IconButton,
+    ImageList,
+    ImageListItem,
+    ImageListItemBar,
+    InputBase,
+    Pagination,
+    Paper,
+    Typography,
+} from '@mui/material';
 import { NavLink, Outlet, URLSearchParamsInit, useLocation, useParams, useSearchParams } from 'react-router-dom';
-import { IMovie } from '../../types';
+import { IMovie, IResponseAmdb } from '../../types';
 import { URL_IMAGE } from '../../utils/constants/constants';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { ContentBar } from '../../components/contentBar/contentBar';
 import { Section } from '../../components/section/section';
 import SearchIcon from '@mui/icons-material/Search';
 import { Star } from '@mui/icons-material';
 import React from 'react';
+import { useQuery } from 'react-query';
+import MovieService from '../../api/movie.service';
+import { setStoreByData } from '../../api/movie.slice';
 
 /**
  * interface QueryNavLinkProps
@@ -16,7 +28,6 @@ import React from 'react';
  * children - react children node
  */
 interface IQueryNavLinkProps {
-    key: number;
     to: string;
     children: React.ReactNode;
 }
@@ -28,11 +39,7 @@ interface IQueryNavLinkProps {
 function QueryNavLink(props: IQueryNavLinkProps) {
     let location = useLocation();
 
-    return (
-        <NavLink key={props.key} to={props.to + location.search}>
-            {props.children}
-        </NavLink>
-    );
+    return <NavLink to={props.to + location.search}>{props.children}</NavLink>;
 }
 
 /**
@@ -47,8 +54,9 @@ export const MoviesPage = (): JSX.Element => {
     const params = useParams();
     const movieId = params.movieId !== undefined ? Number(params.movieId) : undefined;
     const [showMovieDetail, setShowMovieDetail] = React.useState(false);
-    // filter search movies params on filter value
+    // filter search movies params on filter value only display
     const [searchParams, setSearchParams] = useSearchParams({ replace: true });
+    const [page, setPage] = React.useState(1);
 
     // listener movieId defined display detail or movies
     React.useEffect(() => {
@@ -108,13 +116,43 @@ export const MoviesPage = (): JSX.Element => {
                                     ))}
                             </>
                         </ImageList>
+                        <PaginationControlled movies={movies} page={page} setPage={setPage} />
                     </>
                 )}
             </Section>
         </ContentBar>
     );
 };
+interface IPaginationControlled {
+    movies: IResponseAmdb;
+    page: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+const PaginationControlled = (props: IPaginationControlled): JSX.Element => {
+    const { page, setPage } = props;
+    // dispatch redux
+    const dispatch = useAppDispatch();
 
+    // Queries only once data (queries client config) and set storage with value fetch
+    const { refetch: newMovies } = useQuery<IResponseAmdb, Error>(
+        'movies',
+        () => {
+            return MovieService.getDiscoverByPage(page);
+        },
+        {
+            onSuccess: (res: IResponseAmdb) => {
+                dispatch(setStoreByData(res));
+            },
+        }
+    );
+    const handleChange = (event: React.ChangeEvent<unknown>, newPage: number) => {
+        setPage(newPage);
+    };
+    React.useEffect(() => {
+        newMovies();
+    }, [page]);
+    return <Pagination count={500} page={page} onChange={handleChange} variant="outlined" shape="rounded" />;
+};
 /**
  * Interface SearchMovie
  * searchParams         - react router search param on url

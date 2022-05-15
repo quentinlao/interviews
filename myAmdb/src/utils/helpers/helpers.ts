@@ -13,3 +13,9 @@ export const findMovieById = (movies: IMovie[], id: number): IMovie | undefined 
     }
     return result;
 };
+
+export const addMovies = (movies1: IMovie[], movies2: IMovie[]): IMovie[] => {
+    const movies = new Set(movies1);
+    movies2.forEach((movie2: IMovie) => movies.add(movie2));
+    return [...movies];
+};

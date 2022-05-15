@@ -1,4 +1,4 @@
-import './navBar.module.css';
+import styles from './navBar.module.css';
 
 /**
  * interface NavBarProps
@@ -14,5 +14,5 @@ interface INavBarProps {
  * @returns Component nav bar
  */
 export const NavBar = (props: INavBarProps) => {
-    return <nav>{props.children}</nav>;
+    return <div className={styles.navBarView}>{props.children}</div>;
 };

@@ -15,7 +15,11 @@ export const PopularityPage = (): JSX.Element => {
     const movies = useAppSelector((state) => state.movie);
     const myMovies = movies?.results;
     const ImageData =
-        myMovies !== undefined ? myMovies.map((movie: IMovie) => ({ image: `${URL_IMAGE}${movie.poster_path}` })) : [];
+        myMovies !== undefined
+            ? [...myMovies]
+                  .sort((a: IMovie, b: IMovie) => b.vote_count - a.vote_count)
+                  .map((movie: IMovie) => ({ image: `${URL_IMAGE}${movie.poster_path}` }))
+            : [];
 
     return (
         <ContentBar>

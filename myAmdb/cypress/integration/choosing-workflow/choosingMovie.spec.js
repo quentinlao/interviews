@@ -28,9 +28,9 @@ describe('Welcoming flow', () => {
         cy.get('[data-test-id="moviesLink"]').should('be.visible').click();
 
         cy.get('[data-test-id="searchMovieId"]').scrollIntoView().should('be.visible');
-        cy.get('[data-test-id="searchMovieId"]').type('Noovo').should('be.visible');
+        cy.get('[data-test-id="searchMovieId"]').type('H').should('be.visible');
         cy.get('[data-test-id="moviesListId"]').children().first().should('be.visible').click();
-        cy.get('[data-test-id="movieFoundId"]').should('be.visible').should('contain', 'Noovo');
+        cy.get('[data-test-id="movieFoundId"]').should('be.visible').should('contain', 'H');
 
         cy.get('[data-test-id="movieLabelTitleId"]').should('be.visible').should('contain', 'Titre du film');
         cy.get('[data-test-id="movieLabelNameId"]').should('be.visible').should('contain', `Nom d'origine`);

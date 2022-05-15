@@ -19,12 +19,11 @@ export const HomePage = (): JSX.Element => {
     const dispatch = useAppDispatch();
 
     // Queries only once data (queries client config) and set storage with value fetch
-    const { data: movies } = useQuery<IResponseAmdb, Error>('movies', async () => MovieService.getDiscover(), {
+    const { data: movies } = useQuery<IResponseAmdb, Error>('movies', async () => MovieService.getDiscoverByPage(1), {
         onSuccess: (res: IResponseAmdb) => {
             dispatch(setStoreByData(res));
         },
     });
-
     // outlet parent route for nest app route
     return (
         <>

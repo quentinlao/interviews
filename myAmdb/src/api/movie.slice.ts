@@ -19,7 +19,9 @@ export const movieSlice = createSlice({
     initialState,
     reducers: {
         setStoreByData: (state: IResponseAmdb, action: PayloadAction<IResponseAmdb>) => {
-            state = action.payload;
+            state = {
+                ...action.payload,
+            };
             return state;
         },
     },
