@@ -4,7 +4,7 @@ import { URL_IMAGE } from '../../utils/constants/constants';
 import { SliderView } from '../../components/sliderView/sliderView';
 import { useAppSelector } from '../../hooks/hooks';
 import { ContentBar } from '../../components/contentBar/contentBar';
-import { Section } from '../../components/section/Section';
+import { Section } from '../../components/section/section';
 
 export const PopularityPage = (): JSX.Element => {
     const movies = useAppSelector((state) => state.movie);
@@ -15,7 +15,7 @@ export const PopularityPage = (): JSX.Element => {
     return (
         <ContentBar>
             <Section flexDirection="column">
-                <Typography variant="h2" gutterBottom component="div">
+                <Typography data-test-id="popularTitleId" variant="h2" gutterBottom component="div">
                     Film en vedette
                 </Typography>
                 <SliderView slides={ImageData} />

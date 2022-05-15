@@ -19,8 +19,9 @@ export const MoviePage = (): JSX.Element => {
     let navigate = useNavigate();
     return (
         <>
-            <Typography variant="h2" gutterBottom component="div">
+            <Typography data-test-id="movieFoundId" variant="h2" gutterBottom component="div">
                 <ArrowBackIosIcon
+                    data-test-id="returnMovieId"
                     fontSize="large"
                     onClick={() => {
                         navigate('/movies');
@@ -32,26 +33,31 @@ export const MoviePage = (): JSX.Element => {
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row' }}>
                     <CardMedia component="img" height="600" image={`${URL_IMAGE}${movie?.poster_path}`} />
                     <CardContent sx={{ width: 10000 }}>
-                        <Typography gutterBottom variant="h3" component="div">
+                        <Typography data-test-id="movieLabelTitleId" gutterBottom variant="h3" component="div">
                             Titre du film : {movie?.name}
                         </Typography>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography data-test-id="movieLabelNameId" gutterBottom variant="h5" component="div">
                             Nom d'origine : {movie?.original_name}
                         </Typography>
 
-                        <Typography variant="body1" color="text.secondary" component="p">
+                        <Typography
+                            data-test-id="movieLabelOverviewId"
+                            variant="body1"
+                            color="text.secondary"
+                            component="p"
+                        >
                             Résumé : {movie?.overview}
                         </Typography>
-                        <Typography variant="h6" color="text.secondary">
+                        <Typography data-test-id="movieLabelDateId" variant="h6" color="text.secondary">
                             Date de parution : {movie?.first_air_date}
                         </Typography>
-                        <Typography variant="h6" color="text.secondary">
+                        <Typography data-test-id="movieLabelLangueId" variant="h6" color="text.secondary">
                             Langue : {movie?.original_language}
                         </Typography>
-                        <Typography variant="h6" color="text.secondary">
+                        <Typography data-test-id="movieLabelPopularId" variant="h6" color="text.secondary">
                             Popularité : {movie?.popularity}
                         </Typography>
-                        <Typography variant="h6" color="text.secondary">
+                        <Typography data-test-id="movieLabelVoteId" variant="h6" color="text.secondary">
                             Nombre de votes : {movie?.vote_count} / Moyenne ({movie?.vote_average})
                         </Typography>
                     </CardContent>

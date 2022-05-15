@@ -25,11 +25,15 @@ export const SliderView = (props: ISliderViewProps) => {
     const styleIcon = { color: 'primary.main', fontSize: 40 };
     return (
         <div className="sliderView">
-            <ArrowBackIcon onClick={prevSlide} sx={styleIcon} />
+            <ArrowBackIcon id="leftArrow" onClick={prevSlide} sx={styleIcon} />
             {slides.map((slide: ImageUrl, index: number) => {
-                return <div key={index}>{index === current && <img src={slide.image} alt="" />}</div>;
+                return (
+                    <div key={index}>
+                        {index === current && <img id={`slider${index}`} src={slide.image} alt={`slider${index}`} />}
+                    </div>
+                );
             })}
-            <ArrowForwardIcon onClick={nextSlide} sx={styleIcon} />
+            <ArrowForwardIcon id="rightArrow" onClick={nextSlide} sx={styleIcon} />
         </div>
     );
 };

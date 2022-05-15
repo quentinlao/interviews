@@ -25,15 +25,15 @@ export const HomePage = (): JSX.Element => {
                 <Typography variant="h2" gutterBottom component="div">
                     <Link to="/">
                         <div style={{ textAlign: 'center' }}>
-                            <img src={logo} />
+                            <img data-test-id="logo" src={logo} />
                         </div>
                     </Link>
                 </Typography>
                 <ul className={styles.homePageNav}>
-                    <li>
+                    <li data-test-id="popularLink">
                         <NavLinkView to="/popularity">Populaires</NavLinkView>
                     </li>
-                    <li>
+                    <li data-test-id="moviesLink">
                         <NavLinkView to="/movies">Tous les films</NavLinkView>
                     </li>
                 </ul>

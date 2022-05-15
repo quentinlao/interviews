@@ -4,7 +4,7 @@ import { IMovie } from '../../types';
 import { URL_IMAGE } from '../../utils/constants/constants';
 import { useAppSelector } from '../../hooks/hooks';
 import { ContentBar } from '../../components/contentBar/contentBar';
-import { Section } from '../../components/section/Section';
+import { Section } from '../../components/section/section';
 import SearchIcon from '@mui/icons-material/Search';
 import { Star } from '@mui/icons-material';
 import React from 'react';
@@ -45,7 +45,7 @@ export const MoviesPage = (): JSX.Element => {
                     <Outlet />
                 ) : (
                     <>
-                        <Typography variant="h2" gutterBottom component="div">
+                        <Typography data-test-id="moviesTitleId" variant="h2" gutterBottom component="div">
                             Tous les films
                         </Typography>
                         <Paper
@@ -53,6 +53,7 @@ export const MoviesPage = (): JSX.Element => {
                             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
                         >
                             <InputBase
+                                data-test-id="searchMovieId"
                                 sx={{ ml: 1, flex: 1 }}
                                 placeholder="Rerchercher un film"
                                 value={searchParams.get('filter') || ''}
@@ -69,7 +70,7 @@ export const MoviesPage = (): JSX.Element => {
                                 <SearchIcon />
                             </IconButton>
                         </Paper>
-                        <ImageList sx={{ width: 1245 }} cols={4} gap={6}>
+                        <ImageList data-test-id={`moviesListId`} sx={{ width: 1245 }} cols={4} gap={6}>
                             <>
                                 {myMovies
                                     ?.filter((movie: IMovie) => {
@@ -78,8 +79,8 @@ export const MoviesPage = (): JSX.Element => {
                                         let name = movie.name.toLowerCase();
                                         return name.startsWith(filter.toLowerCase());
                                     })
-                                    .map((movie: IMovie) => (
-                                        <ImageListItem key={movie.id}>
+                                    .map((movie: IMovie, index: number) => (
+                                        <ImageListItem data-test-id={`movie${index}`} key={movie.id}>
                                             <QueryNavLink key={movie.id} to={`/movies/${movie.id}`}>
                                                 <img
                                                     src={`${URL_IMAGE}${movie.poster_path}`}
