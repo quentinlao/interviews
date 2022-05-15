@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
+        "esModuleInterop": true, // esModuleInterop allows JS compatibility
         // React 17 production
         "jsx": "react-jsx",
-        "module": "esnext",
-        "moduleResolution": "node",
+        "module": "esnext", // newer version es
+        "moduleResolution": "node", // moduleResolution for the commonJS of node, the lib for the DOM and ES
         "lib": ["dom", "esnext"],
-        "strict": true,
-        "sourceMap": true,
-        "target": "esnext",
+        "strict": true, // strict for the checking of all options
+        "sourceMap": true, // sourceMap for the creation of a source map for the js files generated jsx.map and its json
+        "target": "esnext", // target of EMACScript configuration
         "plugins": [{ "name": "typescript-plugin-css-modules" }],
         "baseUrl": ".", // ./src to shorthen import
         "types": ["jest", "cypress", "node"]

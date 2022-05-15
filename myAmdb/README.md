@@ -48,6 +48,7 @@ Run the .bat script in `<GIT_DIRECTORY>/.git-hooks` to instanciate the git hooks
 
 # Installation
 
+-   Create .env file and add `API_KEY_DEV={API_IN_INTERVIEW_MAIL}`
 -   Default project `PORT=8085`, starting the project with `yarn` to install all dependancies and use this command to launch
 
 ```
