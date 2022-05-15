@@ -6,7 +6,12 @@ import { useAppSelector } from '../../hooks/hooks';
 import { ContentBar } from '../../components/contentBar/contentBar';
 import { Section } from '../../components/section/section';
 
+/**
+ * Popularity page with slider
+ * @returns Popularity page
+ */
 export const PopularityPage = (): JSX.Element => {
+    // redux storage get movie
     const movies = useAppSelector((state) => state.movie);
     const myMovies = movies?.results;
     const ImageData =

@@ -1,3 +1,6 @@
+/**
+ * interface server response API discover
+ */
 export interface IResponseAmdb {
     page: number;
     results: IMovie[];
@@ -5,6 +8,9 @@ export interface IResponseAmdb {
     total_results: number;
 }
 
+/**
+ * Interface movie model
+ */
 export interface IMovie {
     backdrop_path: string;
     first_air_date: string;

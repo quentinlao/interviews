@@ -1,8 +1,11 @@
 /// <reference types="cypress" />
 
 import { expect } from 'chai';
+
 const API_KEY_DEV = process.env.API_KEY_DEV;
 const API_AMBD_API = 'https://api.themoviedb.org/3';
+const POPULAR_LINK_ID = '[data-test-id="popularLink"]';
+
 describe('Welcoming flow', () => {
     beforeEach(() => {
         cy.visit('/');
@@ -16,17 +19,17 @@ describe('Welcoming flow', () => {
 
     it('Check display welcoming', () => {
         cy.get('[data-test-id="logo"]').should('be.visible');
-        cy.get('[data-test-id="popularLink"]').should('be.visible');
-        cy.get('[data-test-id="popularLink"]').click();
-        cy.get('[data-test-id="popularLink"]').children().should('be.visible');
-        cy.get('[data-test-id="popularLink"]').children().should('have.attr', 'aria-current');
+        cy.get(POPULAR_LINK_ID).should('be.visible');
+        cy.get(POPULAR_LINK_ID).click();
+        cy.get(POPULAR_LINK_ID).children().should('be.visible');
+        cy.get(POPULAR_LINK_ID).children().should('have.attr', 'aria-current');
         cy.get('[data-test-id="popularTitleId"]').should('be.visible');
         cy.get('#leftArrow').should('be.visible');
         cy.get('#slider0').should('be.visible');
         cy.get('#rightArrow').should('be.visible');
     });
     it('Check scrolling', () => {
-        cy.get('[data-test-id="popularLink"]').click();
+        cy.get(POPULAR_LINK_ID).click();
         cy.get('#leftArrow').should('be.visible').click();
         cy.get('#slider19').should('be.visible');
         cy.get('#rightArrow').should('be.visible').click();

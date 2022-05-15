@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import './SliderView.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+/**
+ * interface sliderViewProps
+ * slides   - array of imageUrl
+ */
 interface ISliderViewProps {
     slides: ImageUrl[];
 }
 
+/**
+ * interface ImageUrl
+ * image    - url image string
+ */
 interface ImageUrl {
     image: string;
 }
+
+/**
+ * Component slide view
+ * @param props interface ImageUrl
+ * @returns Component slide view
+ */
 export const SliderView = (props: ISliderViewProps) => {
     const { slides } = props;
     const [current, setCurrent] = useState(0);

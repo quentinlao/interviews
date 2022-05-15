@@ -5,11 +5,12 @@ import './styles/globals.css';
 import store from './store';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { PopularityPage } from './pages/popularityPage/popularityPage';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { MoviesPage } from './pages/moviesPage/moviesPage';
 import { HomePage } from './pages/homePage/homePage';
 import { MoviePage } from './pages/moviePage/moviePage';
 
+// time to refetch data
 const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
 
 // Create a client
@@ -25,6 +26,7 @@ const queryClient = new QueryClient({
     },
 });
 
+// render add to html
 ReactDOM.render(
     <Provider store={store}>
         <QueryClientProvider client={queryClient}>
@@ -38,7 +40,7 @@ ReactDOM.render(
                                 index // parent routes outlet
                                 element={
                                     <main style={{ padding: '1rem' }}>
-                                        <p>no result</p>
+                                        <p>pas de resultat</p>
                                     </main>
                                 }
                             />
@@ -48,7 +50,7 @@ ReactDOM.render(
                             path="*"
                             element={
                                 <main style={{ padding: '1rem' }}>
-                                    <p>There's nothing here!</p>
+                                    <p>Default endpoint</p>
                                 </main>
                             }
                         />

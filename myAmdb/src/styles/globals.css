@@ -24,3 +24,13 @@ body {
 ul li {
     list-style: none;
 }
+h6 {
+    color: var(--text-color) !important;
+}
+:root {
+    --text-color: rgb(27, 27, 27);
+}
+
+[data-theme='dark'] {
+    --text-color: rgb(197, 197, 197);
+}

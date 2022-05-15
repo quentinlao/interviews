@@ -1,21 +1,29 @@
 import { Typography } from '@mui/material';
-import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { findMovieById } from '../../utils/helpers/helpers';
 import { useAppSelector } from '../../hooks/hooks';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { ContentBar } from '../../components/contentBar/contentBar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import { URL_IMAGE } from '../../utils/constants/constants';
 
+/**
+ * Movie page detail
+ * @returns Movie page
+ */
 export const MoviePage = (): JSX.Element => {
+    // router params url
     const params = useParams();
+    // define movieId
     const movieId = params.movieId !== undefined ? Number(params.movieId) : 0;
+    // redux fetch data movie store
     const movies = useAppSelector((state) => state.movie);
     const myMovies = movies?.results;
+    // find specific movie by ID
     const movie = findMovieById(myMovies, movieId);
+    // router to navigate
     let navigate = useNavigate();
     return (
         <>
@@ -27,7 +35,7 @@ export const MoviePage = (): JSX.Element => {
                         navigate('/movies');
                     }}
                 />
-                Selected {movie && movie.name}
+                Selection de film : {movie && movie.name}
             </Typography>
             <Card sx={{ display: 'flex' }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'row' }}>

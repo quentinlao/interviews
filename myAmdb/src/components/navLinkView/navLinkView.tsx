@@ -1,10 +1,21 @@
 import { NavLink } from 'react-router-dom';
 import styles from './navLinkView.module.css';
 
+/**
+ * interface NavLinkViewProps
+ * children     - react children node
+ * to           - destination routing
+ */
 interface INavLinkViewProps {
     children: React.ReactNode;
     to: string;
 }
+
+/**
+ * c custom of navLink
+ * @param props interface NavLinkViewProps
+ * @returns Nav link view
+ */
 export const NavLinkView = (props: INavLinkViewProps) => {
     return (
         <NavLink

@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { expect } from 'chai';
+
 const API_KEY_DEV = process.env.API_KEY_DEV;
 const API_AMBD_API = 'https://api.themoviedb.org/3';
 describe('Welcoming flow', () => {
