@@ -4,7 +4,7 @@ MyAmdb is an application that use https://developers.themoviedb.org/3/ API to sh
 
 -   **Architecture project** Simple react app configuration without CRA see https://medium.com/@sakeshi/the-project-crt-skeleton-61c72f10763d
 -   **Redux** a bit overkill but simple demonstration RTK.
--   **Reac router** simple routing management for pages.
+-   **React router** simple routing management for pages.
 -   **React queries** simple queries for server management data.
 -   **Testing strategy** Design unit test, integration (end to end) and report lcov coverage.
 
@@ -28,7 +28,7 @@ Specification in this project display a list of movies or series. Bonus : be abl
 -   Axios for request HTTP handling data
 -   dotenv to configure .env
 
-## Pre installation (toolings)
+## Pre installation developper only (toolings)
 
 VSCODE extensions used to develop faster
 
